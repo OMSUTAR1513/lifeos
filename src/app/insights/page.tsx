@@ -1,6 +1,8 @@
 import { PageHeader } from "@/components/layout/page-header";
+import { requireAuth } from "@/lib/require-auth";
 
-export default function InsightsPage() {
+export default async function InsightsPage() {
+  await requireAuth();
   return (
     <div className="space-y-6">
       <PageHeader

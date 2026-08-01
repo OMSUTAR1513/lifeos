@@ -2,8 +2,10 @@ import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { SummaryCard } from "@/components/dashboard/summary-card";
 import { activityFeed, dashboardStats } from "@/lib/mock-data";
+import { requireAuth } from "@/lib/require-auth";
 
-export default function Home() {
+export default async function Home() {
+  await requireAuth();
   return (
     <AppShell>
       <div className="space-y-6">

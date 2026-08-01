@@ -1,6 +1,8 @@
 import { PageHeader } from "@/components/layout/page-header";
+import { requireAuth } from "@/lib/require-auth";
 
-export default function ExpensesPage() {
+export default async function ExpensesPage() {
+  await requireAuth();
   return (
     <div className="space-y-6">
       <PageHeader

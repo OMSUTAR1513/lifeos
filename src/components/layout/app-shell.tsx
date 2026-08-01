@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { BarChart3, CreditCard, LayoutDashboard, Menu, Settings, Sparkles, Subtitles, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { UserMenu } from "./user-menu";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -27,14 +28,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <p className="text-sm font-semibold text-slate-900">LifeOS</p>
               <p className="text-xs text-slate-500">Personal finance command center</p>
             </div>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen((open) => !open)}
-              className="rounded-full border border-slate-200 bg-slate-50 p-2 text-slate-700"
-              aria-label="Toggle navigation"
-            >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            <div className="flex items-center gap-2">
+              <UserMenu />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="rounded-full border border-slate-200 bg-slate-50 p-2 text-slate-700"
+                aria-label="Toggle navigation"
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
           {mobileMenuOpen ? (
             <nav className="mt-4 space-y-1">
@@ -65,14 +69,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <div className="flex flex-1 gap-4 lg:gap-6">
           <aside className="hidden w-72 shrink-0 rounded-[28px] border border-slate-200/70 bg-white/70 p-5 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.25)] backdrop-blur xl:flex xl:flex-col">
-            <div className="mb-8 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white">
-                <BarChart3 className="h-5 w-5" />
+            <div className="mb-8 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                  <BarChart3 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-slate-900">LifeOS</p>
+                  <p className="text-sm text-slate-500">AI finance overview</p>
+                </div>
               </div>
-              <div>
-                <p className="text-lg font-semibold text-slate-900">LifeOS</p>
-                <p className="text-sm text-slate-500">AI finance overview</p>
-              </div>
+              <UserMenu />
             </div>
 
             <nav className="space-y-1">
