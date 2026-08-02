@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronDown, LogOut, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export function UserMenu() {
@@ -11,26 +11,34 @@ export function UserMenu() {
   const [userName, setUserName] = useState("User");
   const [userEmail, setUserEmail] = useState("");
 
-  useState(() => {
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
     const sessionUser = document.cookie
       .split(";")
       .map((item) => item.trim())
       .find((item) => item.startsWith("lifeos-session="));
 
-    if (sessionUser) {
-      const payload = sessionUser.split("=")[1];
-      if (payload) {
-        const raw = atob(payload);
-        try {
-          const parsed = JSON.parse(raw);
-          setUserName(parsed.name || parsed.email || "User");
-          setUserEmail(parsed.email || "");
-        } catch {
-          setUserName("User");
-        }
-      }
+    if (!sessionUser) {
+      return;
     }
-  });
+
+    const payload = sessionUser.split("=")[1];
+    if (!payload) {
+      return;
+    }
+
+    try {
+      const raw = atob(payload);
+      const parsed = JSON.parse(raw);
+      setUserName(parsed.name || parsed.email || "User");
+      setUserEmail(parsed.email || "");
+    } catch {
+      setUserName("User");
+    }
+  }, []);
 
   return (
     <div className="relative">
